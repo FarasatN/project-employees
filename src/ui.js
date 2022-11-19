@@ -23,7 +23,8 @@ export class UI {
             `;
     });
     this.employeeList.innerHTML = result;
-  }
+    }
+  
 
   addAllEmployeeToUI(employees) {
     let result = "";
@@ -108,7 +109,13 @@ export class UI {
   }
 
   clearEmployees(){
-    confirm("Are you sure to clear all employees?");
+    if(confirm("Are you sure to clear all employees?")===true){
       this.employeeList.innerHTML = "";
+      return true;
+
+    }else{
+      return false;
+    }
+
   }
 }

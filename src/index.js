@@ -28,23 +28,23 @@ function eventListeners() {
 }
 
 function clearAllEmployees() {
-  request
-    .get()
-    .then((employees) => {
-      // ui.addAllEmployeeToUI(employees);
-      // console.log(employees);
-      for (let i = 0; i < employees.length; i++) {
-        console.log(employees[i].id);
-
         request
-          .delete(employees[i].id)
-          .then((message) => console.log(message))
+        .get()
+        .then((employees) => {
+          // ui.addAllEmployeeToUI(employees);
+          // console.log(employees);
+          if(employees.length!==0){
+            if(ui.clearEmployees()==true){
+                for (let i = 0; i < employees.length; i++) {
+                    // console.log(employees[i].id);
+                    request
+                      .delete(employees[i].id)
+                      .then((message) => console.log(message))
+                      .catch((err) => console.log(err));
+                  }
+            }
+          }})
           .catch((err) => console.log(err));
-        // console.log("ok");
-      }
-    })
-    .catch((err) => console.log(err));
-  // ui.clearEmployees();
 }
 
 function search() {
@@ -74,15 +74,8 @@ function searchData(value) {
           filteredEmployee.push(employees[i]);
           // console.log(employees);
           ui.showFilteredEmployee(filteredEmployee);
+           
         }
-        //  else {
-        //     if(value===null || value===""){
-        //         ui.showEmployees();
-        //     }else{
-        //         ui.unShowEmployees();
-        //     }
-        // }
-        // getAllEmployees();
       }
     })
     .catch((err) => console.log(err));
@@ -117,7 +110,7 @@ function updateEmployee() {
     const data = {
       name: nameInput.value.trim(),
       department: departmentInput.value.trim(),
-      salary: Number(salaryInput.value.trim()),
+      salary: parseInt(salaryInput.value.trim()),
     };
     request
       .put(updateState.updateId, data)
@@ -166,19 +159,21 @@ function addEmployee(e) {
       .catch((err) => console.log(err));
   }
 
-  // ui.clearInputs();
+  ui.clearInputs();
   e.preventDefault();
 }
 
 function getAllEmployees() {
+    ui.showEmployees();
   request
     .get()
     .then((employees) => {
       ui.addAllEmployeeToUI(employees);
-      // console.log(employees);
     })
     .catch((err) => console.log(err));
 }
+
+
 
 //GET
 // request.get()
