@@ -33,12 +33,14 @@ function clearAllEmployees() {
     .then((employees) => {
       // ui.addAllEmployeeToUI(employees);
       // console.log(employees);
-      for (let i = employees.length; i > 0; i--) {
+      for (let i = 0; i < employees.length; i++) {
+        console.log(employees[i].id);
+
         request
           .delete(employees[i].id)
           .then((message) => console.log(message))
           .catch((err) => console.log(err));
-        console.log("ok");
+        // console.log("ok");
       }
     })
     .catch((err) => console.log(err));
